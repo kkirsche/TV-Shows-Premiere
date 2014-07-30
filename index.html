@@ -24,7 +24,45 @@
 		<div class="search-box row form-inline"></div>
         <div class="results-top"></div>
         <div class="results-container">
-            <ul class="episode-list"></ul>
+            <ul class="episode-list">
+                <li ng-repeat="tvshow in results">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3">
+                            <img class="img-responsive" ng-src="{{tvshow.episode.images.screen}}" />
+                            <div class="ratings">
+                                <strong>Ratings:</strong> 
+                                <span class="label label-default">
+                                    <i class="glyphicon glyphicon-thumbs-up"></i> 
+                                    {{tvshow.episode.ratings.loved}}
+                                </span> 
+                                &nbsp;
+                                <span class="label label-default">
+                                    <i class="glyphicon glyphicon-thumbs-down"></i> 
+                                    {{tvshow.episode.ratings.hated}}
+                                </span>
+                                &nbsp;
+                                <span class="label label-danger" 
+                                ng-class="{'label-success': tvshow.episode.ratings.percentage >= 50}">
+                                    <strong>%</strong> {{tvshow.episode.ratings.percentage}}
+                                </span>
+                                </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <h3>{{tvshow.show.title}}: {{tvshow.episode.title}}</h3>
+                            <p>{{tvshow.episode.overview}}</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3">
+                            <div class="fulldate pull-right label label-info">{{tvshow.date}}</div>
+                            <ul class="show-info">
+                                <li><strong>On Air:</strong> {{tvshow.show.air_day}} {{tvshow.show.air_time}}</li>
+                                <li><strong>Network:</strong> {{tvshow.show.network}}</li>
+                                <li><strong>Season #:</strong> {{tvshow.episode.season}}</li>
+                                <li><strong>Genres:</strong> <span class="label label-default genre" ng-repeat="genre in tvshow.show.genres">{{genre}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
         <div class="results-bottom"></div>
 	</div>
