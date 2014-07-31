@@ -7,6 +7,11 @@ app.controller("mainController", function($scope, $http){
 
     $scope.availableGenres = [];
     $scope.genreFilter = null;
+
+    $scope.setGenreFilter = function(genre) {
+        $scope.genreFilter = genre;
+    }
+    
     $scope.init = function() {
         //Trakt API requires requires a start date
         var today = new Date();
@@ -20,6 +25,7 @@ app.controller("mainController", function($scope, $http){
             angular.forEach(data, function(value, index){
                 //The API stores the full date separately from each episode. Save it so we can use it later
                 var date = value.date;
+
                 //For each episodes, add it to the results array
                 angular.forEach(value.episodes, function(tvshow, index){
                     //Create a date string from the timestamp so we can filter on it based on user text input
@@ -38,14 +44,29 @@ app.controller("mainController", function($scope, $http){
                         if (exists === false) {
                             $scope.availableGenres.push(genre);
                         }
-                    });
-                });
-            });
+                    }); //end third forEach loop
+                }); //end second forEach loop
+            }); // end first forEach loop
         }).error(function(error) {
             console.log(error);
         });
-
     };
-
 });
 
+app.filter('isGenre', function() {
+    return function(input, genre) {
+        if (typeof genre == 'undefined' || genre == null) {
+            return input;
+        } else {
+            var out = [];
+            for (var a = 0; a < input.length; a++){
+                for (var b = 0; b < input[a].show.genres.length; b++){
+                    if(input[a].show.genres[b] == genre) {
+                        out.push(input[a]);
+                    }
+                }
+            }
+            return out;
+        }
+    };
+});

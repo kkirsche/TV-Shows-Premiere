@@ -32,7 +32,7 @@
         <div class="results-top"></div>
         <div class="results-container">
             <ul class="episode-list">
-                <li ng-repeat="tvshow in results | filter: filterText | filter: genreFilter">
+                <li ng-repeat="tvshow in results | filter: filterText | isGenre:genreFilter">
                     <div class="row">
                         <div class="col-md-3 col-lg-3">
                             <img class="img-responsive" ng-src="{{tvshow.episode.images.screen}}" />
@@ -64,7 +64,7 @@
                                 <li><strong>On Air:</strong> {{tvshow.show.air_day}} {{tvshow.show.air_time}}</li>
                                 <li><strong>Network:</strong> {{tvshow.show.network}}</li>
                                 <li><strong>Season #:</strong> {{tvshow.episode.season}}</li>
-                                <li><strong>Genres:</strong> <span class="label label-default genre" ng-repeat="genre in tvshow.show.genres">{{ genre }}</span></li>
+                                <li><strong>Genres:</strong> <span class="label label-default genre" ng-repeat="genre in tvshow.show.genres" ng-click="setGenreFilter(genre)">{{ genre }}</span></li>
                             </ul>
                         </div>
                     </div>
